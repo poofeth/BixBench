@@ -70,6 +70,34 @@ docker pull futurehouse/bixbench:aviary-notebook-env
 
 See [Docker's Getting Started Guide](https://docs.docker.com/get-started/) for instructions on how to set up Docker.
 
+### Docker image architecture troubleshooting
+
+The published `futurehouse/bixbench:aviary-notebook-env` image may not include a
+`linux/amd64` manifest. On an `amd64` host, Docker can therefore fail with:
+
+```text
+no matching manifest for linux/amd64 in the manifest list entries
+```
+
+Check the available platforms before pulling:
+
+```bash
+docker manifest inspect futurehouse/bixbench:aviary-notebook-env
+```
+
+If the image only lists `linux/arm64`, run it on an ARM64 machine or enable
+cross-platform emulation and pull the ARM64 variant explicitly:
+
+```bash
+docker run --privileged --rm tonistiigi/binfmt --install arm64
+docker pull --platform linux/arm64 futurehouse/bixbench:aviary-notebook-env
+```
+
+If you require native `linux/amd64` execution, use an image that has been rebuilt
+for `linux/amd64` or rebuild the BixBench notebook environment internally before
+running agentic evaluations. Zero-shot evaluation and postprocessing do not use
+this container.
+
 ## Quick Start
 
 For quick reproduction of BixBench results, we provide automated scripts that handle the entire evaluation pipeline:
