@@ -95,8 +95,11 @@ docker pull --platform linux/arm64 futurehouse/bixbench:aviary-notebook-env
 
 If you require native `linux/amd64` execution, use an image that has been rebuilt
 for `linux/amd64` or rebuild the BixBench notebook environment internally before
-running agentic evaluations. Zero-shot evaluation and postprocessing do not use
-this container.
+running agentic evaluations. A community member has also published an
+unofficial multi-architecture rebuild at `chenzizhao/bixbench:aviary-notebook-env`;
+verify that image independently before use, since it is not the Future House
+published image. Zero-shot evaluation and postprocessing do not use this
+container.
 
 ## Quick Start
 
